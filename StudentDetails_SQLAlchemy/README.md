@@ -1,2 +1,2 @@
-# Student Details using SQLAlchemy
+# Student Details using SQLAlchemy - Flask-JWT-Extended
 

@@ -1,16 +1,17 @@
 from flask_restful import Resource
-from flask_jwt import jwt_required
+from flask_jwt_extended import jwt_required, fresh_jwt_required
 from models.departments import DepartmentModel
 
 class Department(Resource):
 
-    @jwt_required()
+    @jwt_required
     def get(self, name):
         department = DepartmentModel.find_by_name(name)
         if department:
             return department.json()
         return {"message":"Department not found"},404
 
+    @fresh_jwt_required
     def post(self, name):
 
         department = DepartmentModel.find_by_name(name)
@@ -34,4 +35,4 @@ class Department(Resource):
 
 class DepartmentList(Resource):
     def get(self):
-        return {"Departments": [department.json() for department in DepartmentModel.query.all()]}
+        return {"Departments": [department.json() for department in DepartmentModel.find_all()]}
